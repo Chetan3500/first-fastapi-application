@@ -9,4 +9,4 @@ class Item(BaseModel):
     is_available: bool = True
 
     class Config:
-        orm_mode = True
+        from_attributes = True

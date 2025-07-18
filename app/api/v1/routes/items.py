@@ -39,7 +39,7 @@ async def read_item(item_id: int):
     query = "SELECT * FROM items WHERE id = :id"
     result = await database.fetch_one(query=query, values={"id": item_id})
     if result is None:
-        raise HTTPException(status_code=400, detail="Failed to create item")
+        raise HTTPException(status_code=400, detail="Item not found")
     return result
 
 
@@ -60,7 +60,7 @@ async def update_item(item_id: int, updated_item: Item):
     }
     result = await database.fetch_one(query=query, values=values)
     if result is None:
-        raise HTTPException(status_code=400, detail="Failed to create item")
+        raise HTTPException(status_code=400, detail="Item not found")
     return result
 
 
@@ -70,5 +70,5 @@ async def delete_item(item_id: int):
     query = "DELETE FROM items WHERE id = :id RETURNING *"
     result = await database.fetch_one(query=query, values={"id": item_id})
     if result is None:
-        raise HTTPException(status_code=400, detail="Failed to create item")
+        raise HTTPException(status_code=400, detail="Item not found")
     return {"message": "Item deleted"}
