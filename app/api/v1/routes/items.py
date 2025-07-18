@@ -67,7 +67,7 @@ async def update_item(item_id: int, updated_item: Item):
 # DELETE SPECIFIC ITEM VIA ID
 @router.delete("/items/{item_id}")
 async def delete_item(item_id: int):
-    query = "DELEET FROM items WHERE id = :id RETURNING *"
+    query = "DELETE FROM items WHERE id = :id RETURNING *"
     result = await database.fetch_one(query=query, values={"id": item_id})
     if result is None:
         raise HTTPException(status_code=400, detail="Failed to create item")
