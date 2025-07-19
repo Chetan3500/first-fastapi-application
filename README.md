@@ -2,8 +2,8 @@
 
 This is a simple **FastAPI** application that implements a CRUD (Create, Read, Update, Delete) API for managing items, using **PostgreSQL** as the database. The project uses
 
-- **SQLAlchemy** for ORM.
-- **Pydantic** for data validation.
+- **[SQLAlchemy](https://www.sqlalchemy.org/)** for ORM.
+- **[Pydantic](https://docs.pydantic.dev/latest/)** for data validation.
 - **databases** for async database operations.
 
 ---
@@ -110,13 +110,52 @@ FastAPI is a Python framework for building APIs with asynchronous programming. I
 
 ## Project Structure
 
-- `main.py`: The main FastAPI application with CRUD endpoints and database logic.
-- `.env`: Environment file for database credentials (not tracked in version control).
-- `requirements.txt` - Contain necessary dependencies.
+```
+fastapi_project/
+│
+├── app/                          # Main application directory
+│   ├── __init__.py               # Marks 'app' as a Python package
+│   ├── main.py                   # Entry point for the FastAPI app
+│   ├── api/                      # API routes and endpoints
+│   │   ├── __init__.py
+│   │   └── v1/                   # Versioned API routes
+│   │       ├── __init__.py
+│   │       └── routes/
+│   │           ├── __init__.py
+│   │           └── items.py      # Item-related endpoints
+│   ├── core/                     # Core configuration and utilities
+│   │   ├── __init__.py
+│   │   ├── config.py            # Environment variables and settings
+│   │   └── database.py          # Database connection setup
+│   ├── models/                   # Pydantic and SQLAlchemy models
+│   │   ├── __init__.py
+│   │   └── item.py              # Item models (Pydantic and SQLAlchemy)
+│   ├── schemas/                  # Database schema definitions (optional)
+│   │   ├── __init__.py
+│   │   └── item.py              # SQLAlchemy table definitions
+│
+├── .env                          # Environment variables (e.g., DATABASE_URL)
+├── requirements.txt              # Project dependencies
+├── README.md                     # Project documentation
+└── run.sh                        # Script to run the app
+```
+
+- **API Versioning**: Routes are under `/api/v1` for future versioning (e.g., `/api/v2`).
+- **Separation of Concerns**:
+  - `core/config.py`: Centralizes configuration.
+  - `core/database.py`: Isolates database setup.
+  - `models/item.py`: Handles request/response validation.
+  - `schemas/item.py`: Defines the database schema.
+  - `api/v1/routes/items.py`: Contains all item-related logic.
+- Ensure all `__init__.py` files exist in the specified directories because `__init__.py` file is used in Python to mark a directory as a Python package, enabling it to be imported as a module in your code. Consider practicing this for avoid `ModuleNotFoundError` when using FastAPI.
+
+---
 
 ## Key-Notes
 
-- **Pydantic’s ORM Mode**: The `orm_mode = True` in the Pydantic model allows FastAPI to convert SQLAlchemy objects to JSON-compatible responses.
+- **Pydantic’s ORM Mode**: The `from_attributes = True` in the Pydantic model allows FastAPI to convert SQLAlchemy objects to JSON-compatible responses.
+
+---
 
 ## Next Steps
 
